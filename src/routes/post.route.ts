@@ -1,0 +1,23 @@
+import express from 'express';
+import PostController from '@src/controllers/PostController';
+import { uploadImage } from '@src/middlewares/upload/file.middleware';
+import { isAuth } from '@src/middlewares';
+import { commentValidation, followValidation, postValidation } from '@src/validation';
+
+const router = express.Router();
+const postController = new PostController();
+router.post('/create', isAuth, uploadImage.array('media'), postController.createPost);
+router.put('/update/:id', isAuth, uploadImage.array('media'), postController.updatePost);
+router.delete('/delete/:id', isAuth, postController.deletePost);
+router.get('post/:id', isAuth, postController.getPostById);
+router.get('/', isAuth, postController.getPosts);
+router.get('/friend', isAuth, postController.getFriendPosts);
+router.put('/follow/:id', isAuth, postController.follow);
+router.delete('/unfollow/:id', isAuth, postController.unfollow);
+router.put('/comment/:id', commentValidation, isAuth, postController.createComment);
+router.delete('/comment/:id', isAuth, postController.deleteComment);
+router.put('/like/:id', isAuth, postController.like);
+router.delete('/unlike/:id', isAuth, postController.unlikePost);
+router.get('/get-comment/:id', isAuth, postController.getComments);
+router.get('/get-notification', isAuth, postController.getNotifications);
+export = router;
