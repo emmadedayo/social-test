@@ -15,6 +15,14 @@ export const getImageExtension = (mimetype: string) => {
       return '.jpeg';
     case 'image/webp':
       return '.webp';
+    case 'video/mp4':
+      return '.mp4';
+    case 'video/quicktime':
+      return '.mov';
+    case 'video/webm':
+      return '.webm';
+    case 'video/x-msvideo':
+      return '.avi';
     default:
       return false;
   }
